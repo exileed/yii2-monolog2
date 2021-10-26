@@ -1,6 +1,6 @@
 <?php
 
-namespace leinonen\Yii2MonogTargets\Tests\Unit\CreationStrategies;
+namespace leinonen\Yii2Monolog\Tests\Unit\CreationStrategies;
 
 use Yii;
 use Mockery as m;
@@ -9,7 +9,7 @@ use leinonen\Yii2Monolog\CreationStrategies\ReflectionStrategy;
 
 class ReflectionStrategyTest extends TestCase
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
         parent::tearDown();
@@ -128,7 +128,7 @@ class ReflectionStrategyTest extends TestCase
     /** @test */
     public function it_should_use_the_given_configure_callable_from_config()
     {
-        $testArgument = new \StdClass;
+        $testArgument = new \StdClass();
         $callbackAssessor = m::mock(\StdClass::class);
         $callbackAssessor->shouldReceive('doSomething')->once()->with($testArgument);
 
@@ -147,7 +147,7 @@ class ReflectionStrategyTest extends TestCase
     /** @test */
     public function if_no_configure_key_given_the_default_configuration_callable_should_just_return_the_given_instance()
     {
-        $testArgument = new \StdClass;
+        $testArgument = new \StdClass();
         $strategy = new ReflectionStrategy(NoConstructor::class);
         $configure = $strategy->getConfigurationCallable([]);
 
@@ -156,11 +156,13 @@ class ReflectionStrategyTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected to find key: 'required1' in the given config array but none found.
+     *
+     *
      */
     public function it_should_throw_an_exception_if_the_required_parameters_are_not_given_in_the_config_array()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Expected to find key: 'required1' in the given config array but none found.");
         $config = [];
 
         $strategy = new ReflectionStrategy(OneRequiredParameter::class);

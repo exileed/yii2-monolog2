@@ -6,7 +6,7 @@ namespace leinonen\Yii2Monolog\CreationStrategies;
 
 use ReflectionParameter;
 use InvalidArgumentException;
-use Illuminate\Support\Collection;
+use Tightenco\Collect\Support\Collection;
 
 class ReflectionStrategy implements CreationStrategyInterface
 {
@@ -96,7 +96,7 @@ class ReflectionStrategy implements CreationStrategyInterface
         }
 
         if ($constructorParameter->hasType() && ! $constructorParameter->getType()->isBuiltin()) {
-            return \Yii::$container->get($constructorParameter->getClass()->name);
+            return \Yii::$container->get($constructorParameter->getType()->getName());
         }
 
         throw new InvalidArgumentException(
@@ -111,6 +111,6 @@ class ReflectionStrategy implements CreationStrategyInterface
      */
     private function getReflectionParametersFromReflectionClass()
     {
-        return collect($this->handlerReflectionClass->getConstructor()->getParameters());
+        return new Collection($this->handlerReflectionClass->getConstructor()->getParameters());
     }
 }

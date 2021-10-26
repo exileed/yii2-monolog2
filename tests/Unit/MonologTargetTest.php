@@ -11,14 +11,14 @@ use leinonen\Yii2Monolog\LoggerRegistry;
 
 class MonologTargetTest extends TestCase
 {
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
         parent::tearDown();
     }
 
     /** @test */
-    public function it_exports_messages_correctly_for_the_monolog_logger()
+    public function itExportsMessagesCorrectlyForTheMonologLogger()
     {
         $mockMonolog = m::mock(Logger::class);
         $mockMonolog->shouldReceive('log')
@@ -65,13 +65,11 @@ class MonologTargetTest extends TestCase
         $mockLoggerRegistry = m::mock(LoggerRegistry::class);
         $mockLoggerRegistry->shouldReceive('getLogger')->with('test')->andReturn($monologLogger);
 
-        $target = new MonologTarget(
+        return new MonologTarget(
             $mockLoggerRegistry,
             [
                 'channel' => 'test',
             ]
         );
-
-        return $target;
     }
 }

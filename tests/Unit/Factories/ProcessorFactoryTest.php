@@ -9,14 +9,14 @@ use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
 
 class ProcessorFactoryTest extends TestCase
 {
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
         parent::tearDown();
     }
 
     /** @test */
-    public function it_can_make_a_processor()
+    public function itCanMakeAProcessor()
     {
         $config = [
             'required' => true,
@@ -37,11 +37,13 @@ class ProcessorFactoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage leinonen\Yii2Monolog\Tests\Unit\Factories\NonCallable isn't callable. All processor classes must implement the __invoke method.
      */
-    public function created_processor_must_be_callable()
+    public function createdProcessorMustBeCallable()
     {
+        $this->expectExceptionMessage(
+            "leinonen\Yii2Monolog\Tests\Unit\Factories\NonCallable isn't callable. All processor classes must implement the __invoke method."
+        );
+        $this->expectException(\InvalidArgumentException::class);
         $mockGenericFactory = m::mock(GenericStrategyBasedFactory::class);
         $factory = new ProcessorFactory($mockGenericFactory);
 

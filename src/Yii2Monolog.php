@@ -2,7 +2,6 @@
 
 namespace leinonen\Yii2Monolog;
 
-use Yii;
 use Monolog\Logger;
 use yii\base\Component;
 use yii\base\BootstrapInterface;
@@ -13,22 +12,22 @@ class Yii2Monolog extends Component implements BootstrapInterface
     /**
      * @var array
      */
-    private $channels;
+    private array $channels;
 
     /**
      * @var MonologFactory
      */
-    private $monologFactory;
+    private MonologFactory $monologFactory;
 
     /**
      * @var string
      */
-    private $mainChannel;
+    private string $mainChannel;
 
     /**
      * @var LoggerRegistry
      */
-    private $loggerRegistry;
+    private LoggerRegistry $loggerRegistry;
 
     /**
      * Initiates a new Yii2Monolog.
@@ -118,10 +117,6 @@ class Yii2Monolog extends Component implements BootstrapInterface
      */
     private function getMainChannel(): string
     {
-        if ($this->mainChannel === null) {
-            return array_keys($this->channels)[0];
-        }
-
-        return $this->mainChannel;
+        return $this->mainChannel ?? array_keys($this->channels)[ 0 ];
     }
 }

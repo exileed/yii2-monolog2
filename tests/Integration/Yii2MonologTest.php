@@ -21,7 +21,7 @@ class Yii2MonologTest extends TestCase
      */
     private $channelName;
 
-    public function setUp()
+    public function setUp(): void
     {
         // Configure a test handler which can be accessed in tests.
         // It is used in the example configuration and the component should resolve it through DI.
@@ -47,7 +47,7 @@ class Yii2MonologTest extends TestCase
     }
 
     /** @test */
-    public function it_configures_monolog_loggers_to_be_fetched_from_service_locator()
+    public function itConfiguresMonologLoggersToBeFetchedFromServiceLocator()
     {
         /** @var Yii2Monolog $component */
         $component = \Yii::$app->monolog;
@@ -60,7 +60,7 @@ class Yii2MonologTest extends TestCase
     }
 
     /** @test */
-    public function loggers_are_registered_with_an_alias_to_the_di_container()
+    public function loggersAreRegisteredWithAnAliasToTheDiContainer()
     {
         $logger = Yii::$container->get("yii2-monolog.{$this->channelName}");
 
@@ -89,7 +89,7 @@ class Yii2MonologTest extends TestCase
     }
 
     /** @test */
-    public function it_can_register_multiple_channels()
+    public function itCanRegisterMultipleChannels()
     {
         $this->destroyApplication();
 
@@ -121,7 +121,7 @@ class Yii2MonologTest extends TestCase
     }
 
     /** @test */
-    public function it_can_register_a_main_channel_to_be_used_for_psr_logger_interface()
+    public function itCanRegisterAMainChannelToBeUsedForPsrLoggerInterface()
     {
         $this->destroyApplication();
 
@@ -148,7 +148,7 @@ class Yii2MonologTest extends TestCase
     }
 
     /** @test */
-    public function it_registers_the_first_channel_implicitly_to_be_used_for_the_psr_logger_interface_if_no_main_channel_is_defined()
+    public function itRegistersTheFirstChannelImplicitlyToBeUsedForThePsrLoggerInterfaceIfNoMainChannelIsDefined()
     {
         $logger = Yii::$container->get(LoggerInterface::class);
 
@@ -157,7 +157,7 @@ class Yii2MonologTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_the_main_logger_if_no_parameters_given_to_get_logger_method()
+    public function itReturnsTheMainLoggerIfNoParametersGivenToGetLoggerMethod()
     {
         $this->destroyApplication();
 
@@ -184,7 +184,7 @@ class Yii2MonologTest extends TestCase
     }
 
     /** @test */
-    public function it_configures_the_registered_loggers_correctly()
+    public function itConfiguresTheRegisteredLoggersCorrectly()
     {
         /** @var Logger $logger */
         $logger = Yii::$container->get(LoggerInterface::class);
@@ -197,17 +197,17 @@ class Yii2MonologTest extends TestCase
         $this->assertSame($this->channelName, $testMessage1['channel']);
         $this->assertSame('special', $testMessage1['context']['specialValue']);
         $this->assertSame('changed value', $testMessage1['context']['configuredValue']);
-        $this->assertContains('myPrefix', $testMessage1['formatted']);
-        $this->assertContains("{$this->channelName}.WARNING: my message", $testMessage1['formatted']);
-        $this->assertContains('{"test":"testvalue"}', $testMessage1['formatted']);
+        $this->assertStringContainsString('myPrefix', $testMessage1['formatted']);
+        $this->assertStringContainsString("{$this->channelName}.WARNING: my message", $testMessage1['formatted']);
+        $this->assertStringContainsString('{"test":"testvalue"}', $testMessage1['formatted']);
 
         $testMessage2 = $this->testHandler->getRecords()[1];
         $this->assertSame('second message', $testMessage2['message']);
         $this->assertSame($this->channelName, $testMessage2['channel']);
         $this->assertSame('special', $testMessage2['context']['specialValue']);
         $this->assertSame('changed value', $testMessage2['context']['configuredValue']);
-        $this->assertContains('myPrefix', $testMessage2['formatted']);
-        $this->assertContains("{$this->channelName}.ERROR: second message", $testMessage2['formatted']);
-        $this->assertContains('{"test":"testvalue"}', $testMessage2['formatted']);
+        $this->assertStringContainsString('myPrefix', $testMessage2['formatted']);
+        $this->assertStringContainsString("{$this->channelName}.ERROR: second message", $testMessage2['formatted']);
+        $this->assertStringContainsString('{"test":"testvalue"}', $testMessage2['formatted']);
     }
 }

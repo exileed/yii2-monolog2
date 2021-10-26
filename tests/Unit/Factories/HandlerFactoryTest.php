@@ -14,14 +14,14 @@ use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
 
 class HandlerFactoryTest extends TestCase
 {
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
         parent::tearDown();
     }
 
     /** @test */
-    public function it_can_make_handlers()
+    public function itCanMakeHandlers()
     {
         $config = [
             'path' => 'app.log',
@@ -47,18 +47,22 @@ class HandlerFactoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage leinonen\Yii2Monolog\Yii2LogMessage doesn't implement Monolog\Handler\HandlerInterface
+     *
+     *
      */
-    public function it_should_throw_an_exception_if_the_given_class_name_doesnt_implement_handler_interface()
+    public function itShouldThrowAnExceptionIfTheGivenClassNameDoesntImplementHandlerInterface()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            "leinonen\Yii2Monolog\Yii2LogMessage doesn't implement Monolog\Handler\HandlerInterface"
+        );
         $mockGenericFactory = m::mock(GenericStrategyBasedFactory::class);
         $factory = new HandlerFactory($mockGenericFactory);
         $factory->make(Yii2LogMessage::class);
     }
 
     /** @test */
-    public function it_can_make_the_handler_with_a_specific_formatter()
+    public function itCanMakeTheHandlerWithASpecificFormatter()
     {
         $lineFormatter = new LineFormatter();
 
@@ -77,7 +81,7 @@ class HandlerFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_make_the_handler_with_a_specific_stack_of_processors()
+    public function itCanMakeTheHandlerWithASpecificStackOfProcessors()
     {
         $processors = [
             function ($record) {

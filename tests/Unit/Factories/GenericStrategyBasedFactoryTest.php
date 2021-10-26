@@ -16,14 +16,14 @@ use leinonen\Yii2Monolog\CreationStrategies\CreationStrategyInterface;
 
 class GenericStrategyBasedFactoryTest extends TestCase
 {
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
         parent::tearDown();
     }
 
     /** @test */
-    public function it_can_make_classes_using_by_utilizing_strategies()
+    public function itCanMakeClassesUsingByUtilizingStrategies()
     {
         $config = [
             'path' => 'app.log',
@@ -34,7 +34,7 @@ class GenericStrategyBasedFactoryTest extends TestCase
         ];
 
         // The created class in the end should be retrieved from dependency injection container
-        $createdHandler = new StreamHandler('app.log', Logger::WARNING, false, 'something', true);
+        $createdHandler = new StreamHandler('app.log', Logger::WARNING, false, 0644, true);
         Yii::$container->set(
             StreamHandler::class,
             function () use ($createdHandler) {
@@ -83,18 +83,17 @@ class GenericStrategyBasedFactoryTest extends TestCase
 
         $this->assertInstanceOf(StreamHandler::class, $handler);
         $this->assertSame($createdHandler, $handler);
-        $this->assertSame('app.log', $handler->getUrl());
         $this->assertSame(Logger::WARNING, $handler->getLevel());
         $this->assertFalse($handler->getBubble());
     }
 
-    /**
-     * @test
-     * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage The parameter 'requiredParameter' is required for Monolog\Handler\StreamHandler
-     */
-    public function it_throws_an_exception_if_the_given_config_misses_required_parameters()
+    /** @test */
+    public function itThrowsAnExceptionIfTheGivenConfigMissesRequiredParameters()
     {
+        $this->expectException(\yii\base\InvalidConfigException::class);
+        $this->expectExceptionMessage(
+            "The parameter 'requiredParameter' is required for Monolog\Handler\StreamHandler"
+        );
         $config = [
             'optionalParameter' => true,
         ];
@@ -114,16 +113,16 @@ class GenericStrategyBasedFactoryTest extends TestCase
         $handler = $factory->makeWithStrategy(StreamHandler::class, $config);
     }
 
-    /**
-     * @test
-     * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got stdClass
-     */
-    public function it_throws_an_exception_if_the_returned_value_from_the_configuration_callable_is_not_the_instantiated_class()
+    /** @test */
+    public function itThrowsAnExceptionIfTheReturnedValueFromTheConfigurationCallableIsNotTheInstantiatedClass()
     {
+        $this->expectException(\yii\base\InvalidConfigException::class);
+        $this->expectExceptionMessage(
+            "The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got stdClass"
+        );
         $config = [
             'configure' => function (BrowserConsoleHandler $instance) {
-                return new \StdClass;
+                return new \StdClass();
             },
         ];
 
@@ -133,11 +132,13 @@ class GenericStrategyBasedFactoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got NULL
      */
-    public function it_throws_an_exception_if_the_returned_value_from_the_configuration_callable_is_null()
+    public function itThrowsAnExceptionIfTheReturnedValueFromTheConfigurationCallableIsNull()
     {
+        $this->expectExceptionMessage(
+            "The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got NULL"
+        );
+        $this->expectException(\yii\base\InvalidConfigException::class);
         $config = [
             'configure' => function (BrowserConsoleHandler $instance) {
                 $instance->setFormatter(new LineFormatter());
@@ -150,11 +151,13 @@ class GenericStrategyBasedFactoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got string
      */
-    public function it_throws_an_exception_if_the_returned_value_from_the_configuration_callable_is_string()
+    public function itThrowsAnExceptionIfTheReturnedValueFromTheConfigurationCallableIsString()
     {
+        $this->expectExceptionMessage(
+            "The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got string"
+        );
+        $this->expectException(\yii\base\InvalidConfigException::class);
         $config = [
             'configure' => function (BrowserConsoleHandler $instance) {
                 return 'instance';
@@ -167,11 +170,13 @@ class GenericStrategyBasedFactoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException \yii\base\InvalidConfigException
-     * @expectedExceptionMessage The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got int
      */
-    public function it_throws_an_exception_if_the_returned_value_from_the_configuration_callable_is_int()
+    public function itThrowsAnExceptionIfTheReturnedValueFromTheConfigurationCallableIsInt()
     {
+        $this->expectException(\yii\base\InvalidConfigException::class);
+        $this->expectExceptionMessage(
+            "The return value of the configure callable must be an instance of Monolog\Handler\BrowserConsoleHandler got int"
+        );
         $config = [
             'configure' => function (BrowserConsoleHandler $instance) {
                 return 1;

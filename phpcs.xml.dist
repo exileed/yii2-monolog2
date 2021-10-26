@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ruleset name="core">
+    <description>The project coding standard.</description>
+
+    <rule ref="PSR2"/>
+    <rule ref="PSR12"/>
+
+    <arg name="extensions" value="php" />
+    <arg name="warning-severity" value="0" />
+    <arg value="p" />
+
+    <file>./src</file>
+    <file>./tests</file>
+
+</ruleset>

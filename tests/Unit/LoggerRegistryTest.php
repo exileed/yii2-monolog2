@@ -16,14 +16,14 @@ class LoggerRegistryTest extends TestCase
      */
     private $mockedContainer;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mockedContainer = m::mock(Container::class);
         \Yii::$container = $this->mockedContainer;
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
         \Yii::$container = new Container();
@@ -31,7 +31,7 @@ class LoggerRegistryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_register_a_logger_to_di_container_with_a_factory_callable()
+    public function itCanRegisterALoggerToDiContainerWithAFactoryCallable()
     {
         $registry = new LoggerRegistry();
         $factoryCallable = function ($channelName) {
@@ -55,7 +55,7 @@ class LoggerRegistryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_retrieve_a_logger_from_the_registry()
+    public function itCanRetrieveALoggerFromTheRegistry()
     {
         $registry = new LoggerRegistry();
         $logger = new Logger('myChannel');
@@ -66,7 +66,7 @@ class LoggerRegistryTest extends TestCase
     }
 
     /** @test */
-    public function it_can_register_the_psr_logger_to_the_di_container_with_callable()
+    public function itCanRegisterThePsrLoggerToTheDiContainerWithCallable()
     {
         $registry = new LoggerRegistry();
         $factoryCallable = function () {

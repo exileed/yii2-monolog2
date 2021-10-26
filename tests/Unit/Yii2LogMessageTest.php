@@ -11,7 +11,7 @@ use leinonen\Yii2Monolog\Yii2LogMessage;
 class Yii2LogMessageTest extends TestCase
 {
     /** @test */
-    public function it_can_be_initialized_with_a_yii2_log_message()
+    public function itCanBeInitializedWithAYii2LogMessage()
     {
         $message = [
             'message',
@@ -40,7 +40,7 @@ class Yii2LogMessageTest extends TestCase
      * @test
      * @dataProvider psr3LogLevelDataProvider
      */
-    public function it_converts_the_yii2_log_level_successfully_to_psr_3_log_level($yii2LogLevel, $psr3LogLevel)
+    public function itConvertsTheYii2LogLevelSuccessfullyToPsr3LogLevel($yii2LogLevel, $psr3LogLevel)
     {
         $message = [
             'message',
@@ -101,7 +101,7 @@ class Yii2LogMessageTest extends TestCase
     }
 
     /** @test */
-    public function yiis_messages_can_be_also_arrays_instead_of_plain_strings()
+    public function yiisMessagesCanBeAlsoArraysInsteadOfPlainStrings()
     {
         $expectedArrayOutput = VarDumper::export(['an array as the log message']);
         $expectedMultiLevelArrayOutput = VarDumper::export([
@@ -135,7 +135,7 @@ class Yii2LogMessageTest extends TestCase
     }
 
     /** @test */
-    public function exceptions_are_extracted_to_monolog_context()
+    public function exceptionsAreExtractedToMonologContext()
     {
         $runTimeException = new \RuntimeException('a runtime exception');
         $message = [
@@ -148,7 +148,7 @@ class Yii2LogMessageTest extends TestCase
         ];
         $logMessage = new Yii2LogMessage($message);
 
-        $this->assertEquals('RuntimeException: a runtime exception', $logMessage->getMessage());
+        $this->assertSame('RuntimeException: a runtime exception', $logMessage->getMessage());
         $this->assertEquals($runTimeException, $logMessage->getException());
         $this->assertArrayHasKey('exception', $logMessage->getContext());
     }
@@ -158,14 +158,12 @@ class Yii2LogMessageTest extends TestCase
      */
     private function getDummyStackTrace()
     {
-        $trace = [
+        return [
             'file' => __FILE__,
             'line' => 62,
             'function' => 'log',
             'class' => Logger::class,
             'type' => '->',
         ];
-
-        return $trace;
     }
 }

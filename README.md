@@ -1,15 +1,13 @@
-[![Latest Stable Version](https://poser.pugx.org/leinonen/yii2-monolog/v/stable)](https://packagist.org/packages/leinonen/yii2-monolog)
-[![Total Downloads](https://poser.pugx.org/leinonen/yii2-monolog/downloads)](https://packagist.org/packages/leinonen/yii2-monolog)
-[![Latest Unstable Version](https://poser.pugx.org/leinonen/yii2-monolog/v/unstable)](https://packagist.org/packages/leinonen/yii2-monolog)
-[![License](https://poser.pugx.org/leinonen/yii2-monolog/license)](https://packagist.org/packages/leinonen/yii2-monolog)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/lordthorzonus/yii2-monolog/?branch=master)
-[![Build Status](https://travis-ci.org/lordthorzonus/yii2-monolog.svg?branch=master)](https://travis-ci.org/lordthorzonus/yii2-monolog)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/44a2e0f3-cde6-48b9-b484-8243a64145de/mini.png)](https://insight.sensiolabs.com/projects/44a2e0f3-cde6-48b9-b484-8243a64145de)
+[![Latest Stable Version](https://poser.pugx.org/exileed/yii2-monolog2/v/stable)](https://packagist.org/packages/exileed/yii2-monolog2)
+[![Total Downloads](https://poser.pugx.org/exileed/yii2-monolog2/downloads)](https://packagist.org/packages/exileed/yii2-monolog2)
+[![Latest Unstable Version](https://poser.pugx.org/exileed/yii2-monolog2/v/unstable)](https://packagist.org/packages/exileed/yii2-monolog2)
+[![License](https://poser.pugx.org/exileed/yii2-monolog2/license)](https://packagist.org/packages/exileed/yii2-monolog2)
+[![test](https://github.com/exileed/yii2-monolog2/actions/workflows/main.yml/badge.svg)](https://github.com/exileed/yii2-monolog2/actions/workflows/main.yml)
 
-## Yii2 Monolog
+## Yii2 Monolog2
 
-Yii2 Monolog allows one to use [Monolog](https://github.com/Seldaek/monolog) easily with Yii2. For instructions regarding Monolog itself please refer to the [documentation](https://github.com/Seldaek/monolog/blob/master/doc/01-usage.md).
+Yii2 Monolog2 allows one to use [Monolog](https://github.com/Seldaek/monolog) easily with Yii2. For instructions
+regarding Monolog itself please refer to the [documentation](https://github.com/Seldaek/monolog/blob/master/doc/01-usage.md).
 
 Table of contents
 =================
@@ -29,7 +27,7 @@ Table of contents
 Require this package, with [Composer](https://getcomposer.org/), in the root directory of your project.
 
 ```bash
-composer require leinonen/yii2-monolog
+composer require exileed/yii2-monolog2
 ```
 
 ## Configuration

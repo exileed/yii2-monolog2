@@ -32,7 +32,7 @@ class MonologFactoryTest extends TestCase
      */
     private $mockFormatterFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->mockHandlerFactory = m::mock(HandlerFactory::class);
         $this->mockProcessorFactory = m::mock(ProcessorFactory::class);
@@ -41,14 +41,14 @@ class MonologFactoryTest extends TestCase
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
         parent::tearDown();
     }
 
     /** @test */
-    public function it_can_make_a_monolog_logger()
+    public function itCanMakeAMonologLogger()
     {
         $factory = new MonologFactory($this->mockHandlerFactory, $this->mockProcessorFactory, $this->mockFormatterFactory);
 
@@ -59,7 +59,7 @@ class MonologFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_assigns_the_handlers_array_correctly_to_the_logger_under_making()
+    public function itAssignsTheHandlersArrayCorrectlyToTheLoggerUnderMaking()
     {
         $mockGitProcessor = m::mock(GitProcessor::class);
         $this->mockProcessorFactory->shouldReceive('make')
@@ -121,7 +121,7 @@ class MonologFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_assigns_processors_array_correctly_to_the_logger_under_making()
+    public function itAssignsProcessorsArrayCorrectlyToTheLoggerUnderMaking()
     {
         $mockGitProcessor = m::mock(GitProcessor::class);
         $this->mockProcessorFactory->shouldReceive('make')

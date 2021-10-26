@@ -19,7 +19,7 @@ class MonologTargetTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function setUp()
+    public function setUp(): void
     {
         // We want to access the Test Handler to assert everything works
         // So let's configure it into DI as it's resolved from there during the creation of the Monolog logger.
@@ -54,7 +54,7 @@ class MonologTargetTest extends TestCase
     }
 
     /** @test */
-    public function it_should_be_a_functioning_yii_log_target()
+    public function itShouldBeAFunctioningYiiLogTarget()
     {
         $logger = Yii::$app->log->getLogger();
 
@@ -75,9 +75,9 @@ class MonologTargetTest extends TestCase
         $this->assertTrue(is_array($testMessage1['context']['trace']));
         // Log level is converted to Monolog level.
         $this->assertSame(\Monolog\Logger::WARNING, $testMessage1['level']);
-        $this->assertContains('myPrefix', $testMessage1['formatted']);
-        $this->assertContains('someChannel.WARNING: my message', $testMessage1['formatted']);
-        $this->assertContains('{"test":"testvalue"}', $testMessage1['formatted']);
+        $this->assertStringContainsString('myPrefix', $testMessage1['formatted']);
+        $this->assertStringContainsString('someChannel.WARNING: my message', $testMessage1['formatted']);
+        $this->assertStringContainsString('{"test":"testvalue"}', $testMessage1['formatted']);
 
         $testMessage2 = $this->handler->getRecords()[1];
 
@@ -92,13 +92,13 @@ class MonologTargetTest extends TestCase
         $this->assertTrue(is_array($testMessage2['context']['trace']));
         // Log level is converted to Monolog level.
         $this->assertSame(\Monolog\Logger::ERROR, $testMessage2['level']);
-        $this->assertContains('myPrefix', $testMessage2['formatted']);
-        $this->assertContains('someChannel.ERROR: second message', $testMessage2['formatted']);
-        $this->assertContains('{"test":"testvalue"}', $testMessage2['formatted']);
+        $this->assertStringContainsString('myPrefix', $testMessage2['formatted']);
+        $this->assertStringContainsString('someChannel.ERROR: second message', $testMessage2['formatted']);
+        $this->assertStringContainsString('{"test":"testvalue"}', $testMessage2['formatted']);
     }
 
     /** @test */
-    public function it_should_extract_exceptions_into_context()
+    public function itShouldExtractExceptionsIntoContext()
     {
         $logger = Yii::$app->log->getLogger();
         $exception = new \RuntimeException('Boom!');

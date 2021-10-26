@@ -1,6 +1,6 @@
 <?php
 
-namespace leinonen\Yii2Monolog\Tests\Unit\HandlerCreationStrategies;
+namespace leinonen\Yii2Monolog\Tests\Unit\CreationStrategies;
 
 use PHPUnit\Framework\TestCase;
 use Monolog\Handler\StreamHandler;
@@ -12,7 +12,7 @@ use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
 class StrategyResolverTest extends TestCase
 {
     /** @test */
-    public function it_can_resolve_a_creation_strategy_for_a_given_handler()
+    public function itCanResolveACreationStrategyForAGivenHandler()
     {
         $resolver = new StrategyResolver();
 
@@ -20,7 +20,7 @@ class StrategyResolverTest extends TestCase
     }
 
     /** @test */
-    public function it_resolves_to_reflection_handler_creation_strategy_for_handler_classes_that_do_not_have_corresponding_creation_strategy()
+    public function itResolvesToReflectionHandlerCreationStrategyForHandlerClassesThatDoNotHaveCorrespondingCreationStrategy()
     {
         $resolver = new StrategyResolver();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace leinonen\Yii2Monolog\Tests\Unit\HandlerCreationStrategies;
+namespace leinonen\Yii2Monolog\Tests\Unit\CreationStrategies;
 
 use Monolog\Logger;
 use ReflectionClass;
@@ -12,7 +12,7 @@ use leinonen\Yii2Monolog\CreationStrategies\StreamHandlerStrategy;
 class StreamHandlerStrategyTest extends TestCase
 {
     /** @test */
-    public function it_returns_correct_required_parameters_for_a_stream_handler()
+    public function itReturnsCorrectRequiredParametersForAStreamHandler()
     {
         $constructorParameters = collect(
             (new ReflectionClass(StreamHandler::class))
@@ -40,7 +40,7 @@ class StreamHandlerStrategyTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_the_right_constructor_parameter_values_from_given_config()
+    public function itReturnsTheRightConstructorParameterValuesFromGivenConfig()
     {
         $config = [
             'path' => 'a stream',
@@ -64,7 +64,7 @@ class StreamHandlerStrategyTest extends TestCase
     }
 
     /** @test */
-    public function it_should_fallback_to_correct_defaults_if_no_config_given()
+    public function itShouldFallbackToCorrectDefaultsIfNoConfigGiven()
     {
         $expectedValues = [];
         // First constructor parameter is stream which is required
@@ -86,7 +86,7 @@ class StreamHandlerStrategyTest extends TestCase
     }
 
     /** @test */
-    public function it_uses_yiis_get_alias_to_resolve_the_path_value()
+    public function itUsesYiisGetAliasToResolveThePathValue()
     {
         \Yii::setAlias('@myAlias', '/awesome');
 
@@ -99,7 +99,7 @@ class StreamHandlerStrategyTest extends TestCase
     }
 
     /** @test */
-    public function it_should_return_a_callable_that_just_returns_the_given_instance_from_configuration_callable()
+    public function itShouldReturnACallableThatJustReturnsTheGivenInstanceFromConfigurationCallable()
     {
         $streamHandler = new StreamHandler('test');
         $strategy = new StreamHandlerStrategy();

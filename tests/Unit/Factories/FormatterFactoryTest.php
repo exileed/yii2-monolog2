@@ -11,14 +11,14 @@ use leinonen\Yii2Monolog\Factories\GenericStrategyBasedFactory;
 
 class FormatterFactoryTest extends TestCase
 {
-    protected function tearDown()
+    protected function tearDown(): void
     {
         m::close();
         parent::tearDown();
     }
 
     /** @test */
-    public function it_can_make_a_formatter()
+    public function itCanMakeAFormatter()
     {
         $config = [
             'key' => 'value',
@@ -39,11 +39,15 @@ class FormatterFactoryTest extends TestCase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage leinonen\Yii2Monolog\Yii2LogMessage doesn't implement Monolog\Formatter\FormatterInterface
+     *
+     *
      */
-    public function it_should_throw_an_exception_if_the_given_class_name_doesnt_implement_formatter_interface()
+    public function itShouldThrowAnExceptionIfTheGivenClassNameDoesntImplementFormatterInterface()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            "leinonen\Yii2Monolog\Yii2LogMessage doesn't implement Monolog\Formatter\FormatterInterface"
+        );
         $mockGenericFactory = m::mock(GenericStrategyBasedFactory::class);
         $factory = new FormatterFactory($mockGenericFactory);
         $factory->make(Yii2LogMessage::class);
