@@ -50,7 +50,7 @@ class Yii2Monolog extends Component implements BootstrapInterface
      *
      * @return Logger
      */
-    public function getLogger(string $channel = null): Logger
+    public function getLogger(?string $channel = null): Logger
     {
         if ($channel === null) {
             $channel = $this->getMainChannel();

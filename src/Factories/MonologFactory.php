@@ -146,15 +146,19 @@ class MonologFactory
      */
     private function mapConfigurations(array $config, callable $mapFunction): array
     {
-        return collect($config)->map(function ($configValue, $configKey) use ($mapFunction) {
-            // In case the key is int assume that just the configurable class name has been given
-            // and supply empty configurations.
+        $mapped = [];
+
+        foreach ($config as $configKey => $configValue) {
             if (\is_int($configKey)) {
-                return $mapFunction($configValue, []);
+                $mapped[] = $mapFunction($configValue, []);
+
+                continue;
             }
 
-            return $mapFunction($configKey, $configValue);
-        })->values()->all();
+            $mapped[] = $mapFunction($configKey, $configValue);
+        }
+
+        return $mapped;
     }
 
     /**

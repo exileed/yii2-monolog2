@@ -6,7 +6,6 @@ namespace leinonen\Yii2Monolog;
 
 use Monolog\Logger;
 use yii\log\Target;
-use Illuminate\Support\Collection;
 
 class MonologTarget extends Target
 {
@@ -54,9 +53,9 @@ class MonologTarget extends Target
      */
     public function export()
     {
-        $this->getMessages()->each(function (Yii2LogMessage $message) {
+        foreach ($this->getMessages() as $message) {
             $this->logger->log($message->getPsr3LogLevel(), $message->getMessage(), $message->getContext());
-        });
+        }
     }
 
     public function setChannel(string $channel)
@@ -67,12 +66,13 @@ class MonologTarget extends Target
     /**
      * Returns the messages from the Target wrapped in Yii2LogMessage.
      *
-     * @return Yii2LogMessage[]|Collection
+     * @return Yii2LogMessage[]
      */
-    private function getMessages(): Collection
+    private function getMessages(): array
     {
-        return collect($this->messages)->map(function ($message) {
-            return new Yii2LogMessage($message);
-        });
+        return array_map(
+            static fn (array $message): Yii2LogMessage => new Yii2LogMessage($message),
+            $this->messages,
+        );
     }
 }

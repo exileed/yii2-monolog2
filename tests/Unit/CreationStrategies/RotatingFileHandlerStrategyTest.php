@@ -14,17 +14,11 @@ class RotatingFileHandlerStrategyTest extends TestCase
     /** @test */
     public function itReturnsCorrectRequiredParametersForAStreamHandler()
     {
-        $constructorParameters = collect(
-            (new ReflectionClass(RotatingFileHandler::class))
-                ->getConstructor()
-                ->getParameters()
-        );
+        $constructorParameters = (new ReflectionClass(RotatingFileHandler::class))
+            ->getConstructor()
+            ->getParameters();
 
-        $requiredParameters = $constructorParameters->reject(
-            function (ReflectionParameter $constructorParameter) {
-                return $constructorParameter->isOptional();
-            }
-        )->map(
+        $requiredParameters = array_map(
             function (ReflectionParameter $constructorParameter) {
                 // We want to call the filename parameter path as Symfony does the same in it's Monolog config.
                 if ($constructorParameter->name === 'filename') {
@@ -32,8 +26,12 @@ class RotatingFileHandlerStrategyTest extends TestCase
                 }
 
                 return $constructorParameter->name;
-            }
-        )->all();
+            },
+            array_filter(
+                $constructorParameters,
+                static fn (ReflectionParameter $constructorParameter): bool => !$constructorParameter->isOptional(),
+            ),
+        );
 
         $strategy = new RotatingFileHandlerStrategy();
         $this->assertSame($requiredParameters, $strategy->getRequiredParameters());

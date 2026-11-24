@@ -40,7 +40,7 @@ class HandlerFactory
     public function make(
         string $handlerClass,
         array $config = [],
-        FormatterInterface $formatter = null,
+        ?FormatterInterface $formatter = null,
         array $processors = []
     ): HandlerInterface {
         $this->validateHandler($handlerClass);

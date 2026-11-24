@@ -1,8 +1,8 @@
-[![Latest Stable Version](https://poser.pugx.org/exileed/yii2-monolog2/v/stable)](https://packagist.org/packages/exileed/yii2-monolog2)
-[![Total Downloads](https://poser.pugx.org/exileed/yii2-monolog2/downloads)](https://packagist.org/packages/exileed/yii2-monolog2)
-[![Latest Unstable Version](https://poser.pugx.org/exileed/yii2-monolog2/v/unstable)](https://packagist.org/packages/exileed/yii2-monolog2)
-[![License](https://poser.pugx.org/exileed/yii2-monolog2/license)](https://packagist.org/packages/exileed/yii2-monolog2)
-[![test](https://github.com/exileed/yii2-monolog2/actions/workflows/main.yml/badge.svg)](https://github.com/exileed/yii2-monolog2/actions/workflows/main.yml)
+[![Latest Stable Version](https://poser.pugx.org/leos-mels9ka/yii2-monolog2/v/stable)](https://packagist.org/packages/leos-mels9ka/yii2-monolog2)
+[![Total Downloads](https://poser.pugx.org/leos-mels9ka/yii2-monolog2/downloads)](https://packagist.org/packages/leos-mels9ka/yii2-monolog2)
+[![Latest Unstable Version](https://poser.pugx.org/leos-mels9ka/yii2-monolog2/v/unstable)](https://packagist.org/packages/leos-mels9ka/yii2-monolog2)
+[![License](https://poser.pugx.org/leos-mels9ka/yii2-monolog2/license)](https://packagist.org/packages/leos-mels9ka/yii2-monolog2)
+[![test](https://github.com/leosh-dev/yii2-monolog2/actions/workflows/main.yml/badge.svg)](https://github.com/leosh-dev/yii2-monolog2/actions/workflows/main.yml)
 
 ## Yii2 Monolog2
 
@@ -27,7 +27,7 @@ Table of contents
 Require this package, with [Composer](https://getcomposer.org/), in the root directory of your project.
 
 ```bash
-composer require exileed/yii2-monolog2
+composer require leos-mels9ka/yii2-monolog2
 ```
 
 ## Configuration

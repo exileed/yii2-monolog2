@@ -6,7 +6,6 @@ namespace leinonen\Yii2Monolog\CreationStrategies;
 
 use ReflectionParameter;
 use InvalidArgumentException;
-use Tightenco\Collect\Support\Collection;
 
 class ReflectionStrategy implements CreationStrategyInterface
 {
@@ -34,15 +33,13 @@ class ReflectionStrategy implements CreationStrategyInterface
             return [];
         }
 
-        return $this->getReflectionParametersFromReflectionClass()->reject(
-            function (ReflectionParameter $constructorParameter) {
-                return $constructorParameter->isOptional();
-            }
-        )->map(
-            function (ReflectionParameter $constructorParameter) {
-                return $constructorParameter->name;
-            }
-        )->all();
+        return array_map(
+            static fn (ReflectionParameter $constructorParameter): string => $constructorParameter->name,
+            array_filter(
+                $this->getReflectionParametersFromReflectionClass(),
+                static fn (ReflectionParameter $constructorParameter): bool => !$constructorParameter->isOptional(),
+            ),
+        );
     }
 
     /**
@@ -54,11 +51,13 @@ class ReflectionStrategy implements CreationStrategyInterface
             return [];
         }
 
-        return $this->getReflectionParametersFromReflectionClass()->map(
-            function (ReflectionParameter $constructorParameter) use ($config) {
-                return $this->resolveConstructorParameterValue($constructorParameter, $config);
-            }
-        )->all();
+        return array_map(
+            fn (ReflectionParameter $constructorParameter): mixed => $this->resolveConstructorParameterValue(
+                $constructorParameter,
+                $config,
+            ),
+            $this->getReflectionParametersFromReflectionClass(),
+        );
     }
 
     /**
@@ -107,10 +106,10 @@ class ReflectionStrategy implements CreationStrategyInterface
     /**
      * Returns the constructor parameters from the reflection class the strategy was initiated with.
      *
-     * @return ReflectionParameter[]|Collection
+     * @return ReflectionParameter[]
      */
-    private function getReflectionParametersFromReflectionClass()
+    private function getReflectionParametersFromReflectionClass(): array
     {
-        return new Collection($this->handlerReflectionClass->getConstructor()->getParameters());
+        return $this->handlerReflectionClass->getConstructor()->getParameters();
     }
 }

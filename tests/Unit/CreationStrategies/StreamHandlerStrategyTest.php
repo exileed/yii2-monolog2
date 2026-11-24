@@ -14,17 +14,11 @@ class StreamHandlerStrategyTest extends TestCase
     /** @test */
     public function itReturnsCorrectRequiredParametersForAStreamHandler()
     {
-        $constructorParameters = collect(
-            (new ReflectionClass(StreamHandler::class))
-                ->getConstructor()
-                ->getParameters()
-        );
+        $constructorParameters = (new ReflectionClass(StreamHandler::class))
+            ->getConstructor()
+            ->getParameters();
 
-        $requiredParameters = $constructorParameters->reject(
-            function (ReflectionParameter $constructorParameter) {
-                return $constructorParameter->isOptional();
-            }
-        )->map(
+        $requiredParameters = array_map(
             function (ReflectionParameter $constructorParameter) {
                 // We want to call the stream parameter path as Symfony does the same in it's Monolog config.
                 if ($constructorParameter->name === 'stream') {
@@ -32,8 +26,12 @@ class StreamHandlerStrategyTest extends TestCase
                 }
 
                 return $constructorParameter->name;
-            }
-        )->all();
+            },
+            array_filter(
+                $constructorParameters,
+                static fn (ReflectionParameter $constructorParameter): bool => !$constructorParameter->isOptional(),
+            ),
+        );
 
         $strategy = new StreamHandlerStrategy();
         $this->assertSame($requiredParameters, $strategy->getRequiredParameters());
